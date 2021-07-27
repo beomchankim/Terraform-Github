@@ -15,3 +15,4 @@ resource "azurerm_resource_group" "rg" {
   name     = "rg-terraform-test"
   location = "koreacentral"
 }
+
