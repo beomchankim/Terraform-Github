@@ -1,9 +1,9 @@
 terraform {
   backend "azurerm" {
-    resource_group_name  = "rg-terraform-test"
-    storage_account_name = "terraformazuretf"
-    container_name       = "terraform-state-test"
-    key                  = "PZFjC7Ljc1tXSotnB7r1WwuPKxwshUBgtuUUM3fucU/lWzfVTjEcOoAeYxkVBD/fcnUfckKohkMFslHtdItp8A=="
+    resource_group_name  = "terraformstfstates"
+    storage_account_name = "terraformstortf"
+    container_name       = "tfstateterraform"
+    key                  = "PcPe07FhX42sIXQFS/AjzpwPNyM0UfsqekAuQaDe0H58cfXyFTlsDoohcjHqaG9PAwc8m0o9F+Z3G2NOifW/kQ=="
   }
 }
 
