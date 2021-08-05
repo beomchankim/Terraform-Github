@@ -14,6 +14,7 @@ env:
   CLUSTER_NAME: aks-test-01
   CLUSTER_RESOURCE_GROUP: rg-terraform-test-3
   NAMESPACE: default
+  NODE_VERSION: '10.x' 
 #   SECRET: {secret-name}
 #   APP_NAME: {app-name}
 
@@ -26,11 +27,21 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: 'Terraform-Github/AKS/'
+        working-directory: './Terraform-Github/AKS'
 
     steps:
       - uses: actions/checkout@v2
       
+      - name: Use Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+        
+      - name: npm install, build, and test
+        run: |
+          # Build and test the project, then
+          # deploy to Azure Web App.
+          npm install
       
       
       # Runs a single command using the runners shell
@@ -40,6 +51,7 @@ jobs:
           login-server: ${{ env.REGISTRY_NAME }}.azurecr.io
           username: ${{ secrets.REGISTRY_USERNAME }} 
           password: ${{ secrets.REGISTRY_PASSWORD }}
+
 
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
