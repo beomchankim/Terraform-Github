@@ -60,3 +60,11 @@ jobs:
           docker push ${{ env.REGISTRY_NAME }}/node-web-app:1.0
           docker run -p 49160:8080 -d ${{ env.REGISTRY_NAME }}/node-web-app:1.0
           
+      - uses: azure/k8s-deploy@v1
+        with:
+#           manifests: |
+#             manifests/deployment.yml
+#             manifests/service.yml
+          images: |
+            ${{ env.REGISTRY_NAME }}/node-web-app:1.0
+          namespace: ${{ env.NAMESPACE }}
