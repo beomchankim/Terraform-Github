@@ -65,13 +65,12 @@ resource "azurerm_kubernetes_cluster" "main" {
   resource_group_name = azurerm_resource_group.main.name
   dns_prefix          = "akstest01"
 
-
   
   default_node_pool {
     name           = "default"
     node_count     = 1
     vm_size        = "Standard_D2_v2"
-    vnet_subnet_id = azurerm_subnet.db.id
+    node_subnet_id = azurerm_subnet.db.subnet_ids[0]
   }
 
   service_principal {
