@@ -23,9 +23,16 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        shell: bash
+        working-directory: 'Terraform-Github/AKS/'
+
     steps:
       - uses: actions/checkout@v2
-
+      
+      
+      
       # Runs a single command using the runners shell
       - name: Run a one-line script
         uses: azure/docker-login@v1
