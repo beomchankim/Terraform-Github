@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx-deployment
+  name: node-web-app
   labels:
-    app: nginx
+    app: node-web-app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: nginx
+      app: node-web-app
   template:
     metadata:
       labels:
-        app: nginx
+        app: node-web-app
     spec:
       containers:
       - name: nginx
