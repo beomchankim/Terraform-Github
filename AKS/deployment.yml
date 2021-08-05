@@ -15,7 +15,7 @@ spec:
         app: node-web-app
     spec:
       containers:
-      - name: nginx
+      - name: node-web-app
         image: acrrepo.azurecr.io/node-web-app:1.0
         ports:
         - containerPort: 80
