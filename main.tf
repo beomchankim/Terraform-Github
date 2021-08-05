@@ -16,7 +16,7 @@ provider "azurerm" {
 }
 
 resource "azurerm_resource_group" "main" {
-  name     = "rg-terraform-test-2"
+  name     = "rg-terraform-test-3"
   location = "koreacentral"
 }
 
