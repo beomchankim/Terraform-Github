@@ -27,7 +27,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: './Terraform-Github/AKS'
+        working-directory: './AKS'
 
     steps:
       - uses: actions/checkout@v2
