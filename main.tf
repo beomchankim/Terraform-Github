@@ -50,7 +50,7 @@ resource "azurerm_subnet" "db" {
   address_prefixes     = ["10.0.2.0/24"]
   
   delegation {
-    name = "aciDelegation"
+    name = "subnet-db"
     service_delegation {
       name    = "Microsoft.ContainerInstance/containerGroups"
       actions = ["Microsoft.Network/virtualNetworks/subnets/action"]
