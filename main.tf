@@ -1,11 +1,11 @@
-# terraform {
-#   backend "azurerm" {
-#     resource_group_name  = "rg-storage"
-#     storage_account_name = "saterrafrom"
-#     container_name       = "con-terraform"
-#     key                  = "eWyDSCS5KVJrG8pWvd2V3GIgH/VFje0VWALT8eGelQrja70djIjnZsjlyTRfaeJr8ewU4av83LI50Ueud91Epw=="
-#   }
-# }
+terraform {
+  backend "azurerm" {
+    resource_group_name  = "rg-storage"
+    storage_account_name = "saterrafrom"
+    container_name       = "con-terraform"
+    key                  = "lYx8w4v8GJXES0sTGXSjOcK3EEL7imcM8yvCqVgJfDfT6jy+rFjWquyqMCOTV7aj2NZTYIWB6UtSAOSctjdO/g=="
+  }
+}
 
 # data "azurerm_client_config" "current" {}
 
