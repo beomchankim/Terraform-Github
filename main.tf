@@ -31,25 +31,26 @@ resource "azurerm_subnet" "main" {
   resource_group_name  = azurerm_resource_group.main.name
   virtual_network_name = azurerm_virtual_network.main.name
   address_prefixes     = ["10.0.1.0/24"]
-
-#   delegation {
-#     name = "example-delegation"
-
-#     service_delegation {
-#       name    = "Microsoft.Web/serverFarms"
-#       actions = ["Microsoft.Network/virtualNetworks/subnets/action"]
-#     }
-#   }
-}
-
-
-resource "azurerm_subnet" "db" {
-  name                 = "subnet-db"
-  resource_group_name  = azurerm_resource_group.main.name
-  virtual_network_name = azurerm_virtual_network.main.name
-  address_prefixes     = ["10.0.2.0/24"]
   
+
+  delegation {
+    name = "subnet-webapp"
+
+    service_delegation {
+      name    = "Microsoft.Web/serverFarms"
+      actions = ["Microsoft.Network/virtualNetworks/subnets/action"]
+    }
+  }
 }
+
+
+# resource "azurerm_subnet" "db" {
+#   name                 = "subnet-db"
+#   resource_group_name  = azurerm_resource_group.main.name
+#   virtual_network_name = azurerm_virtual_network.main.name
+#   address_prefixes     = ["10.0.2.0/24"]
+  
+# }
 
 
 resource "azurerm_kubernetes_cluster" "main" {
@@ -63,7 +64,7 @@ resource "azurerm_kubernetes_cluster" "main" {
     name           = "default"
     node_count     = 1
     vm_size        = "Standard_D2_v2"
-    vnet_subnet_id = azurerm_subnet.db.id
+    vnet_subnet_id = azurerm_subnet.main.id
   }
 
   service_principal {
@@ -76,12 +77,5 @@ resource "azurerm_kubernetes_cluster" "main" {
     network_plugin = "kubenet"
   }
   
-  delegation {
-    name = "subnet-db"
-    service_delegation {
-      name    = "Microsoft.ContainerInstance/containerGroups"
-      actions = ["Microsoft.Network/virtualNetworks/subnets/action"]
-    }
-  }
 }
 #   custom_data = "${base64encode(file("../script/script-mongodb.sh"))}"
