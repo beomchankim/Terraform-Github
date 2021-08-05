@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: AKS
+name: AKS 
 
 # Controls when the workflow will run
 on:
@@ -37,5 +37,7 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
         run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+          docker build . -t ${{ env.REGISTRY_NAME }}.azurecr.io/node-web-app:1.0
+          docker push ${{ env.REGISTRY_NAME }}.azurecr.io/node-web-app:1.0
+          docker run -p 49160:8080 -d ${{ env.REGISTRY_NAME }}.azurecr.io/node-web-app:1.0
+          
