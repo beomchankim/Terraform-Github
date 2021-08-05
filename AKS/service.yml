@@ -3,10 +3,9 @@ kind: Service
 metadata:
   name: node-web-app
 spec:
+  type: LoadBalancer
   selector:
     app: node-web-app
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 9376
-  type: LoadBalancer
