@@ -4,7 +4,7 @@ metadata:
   name: node-web-app
 spec:
   selector:
-    app: nginx
+    app: node-web-app
   ports:
     - protocol: TCP
       port: 80
