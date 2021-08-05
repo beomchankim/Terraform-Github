@@ -1,15 +1,18 @@
-terraform {
-  backend "azurerm" {
-    resource_group_name  = "terraformstfstates"
-    storage_account_name = "terraformstortf"
-    container_name       = "tfstateterraform"
-    key                  = "PcPe07FhX42sIXQFS/AjzpwPNyM0UfsqekAuQaDe0H58cfXyFTlsDoohcjHqaG9PAwc8m0o9F+Z3G2NOifW/kQ=="
-  }
-}
+# terraform {
+#   backend "azurerm" {
+#     resource_group_name  = "rg-storage"
+#     storage_account_name = "saterrafrom"
+#     container_name       = "con-terraform"
+#     key                  = "eWyDSCS5KVJrG8pWvd2V3GIgH/VFje0VWALT8eGelQrja70djIjnZsjlyTRfaeJr8ewU4av83LI50Ueud91Epw=="
+#   }
+# }
 
 provider "azurerm" {
+  version = "~>2.0"
   features {}
 }
+
+data "azurerm_client_config" "current" {}
 
 resource "azurerm_resource_group" "main" {
   name     = "rg-terraform-test-1"
@@ -25,40 +28,61 @@ resource "azurerm_virtual_network" "main" {
 
 resource "azurerm_subnet" "main" {
   name                 = "subnet-webapp"
-  virtual_network_name = azurerm_virtual_network.main.name
   resource_group_name  = azurerm_resource_group.main.name
+  virtual_network_name = azurerm_virtual_network.main.name
   address_prefixes     = ["10.0.1.0/24"]
-}
 
-resource "azurerm_app_service_plan" "main" {
-  name                = "example-service-plan"
-  location            = azurerm_resource_group.main.location
-  resource_group_name = azurerm_resource_group.main.name
+  delegation {
+    name = "example-delegation"
 
-  sku {
-    tier = "Basic"
-    size = "B1"
+    service_delegation {
+      name    = "Microsoft.Web/serverFarms"
+      actions = ["Microsoft.Network/virtualNetworks/subnets/action"]
+    }
   }
 }
 
-resource "azurerm_app_service" "main" {
-  name                = "example-app-service"
+
+resource "azurerm_subnet" "db" {
+  name                 = "subnet-db"
+  resource_group_name  = azurerm_resource_group.main.name
+  virtual_network_name = azurerm_virtual_network.main.name
+  address_prefixes     = ["10.0.2.0/24"]
+  
+  delegation {
+    name = "aciDelegation"
+    service_delegation {
+      name    = "Microsoft.ContainerInstance/containerGroups"
+      actions = ["Microsoft.Network/virtualNetworks/subnets/action"]
+    }
+  }
+}
+
+
+resource "azurerm_kubernetes_cluster" "main" {
+  name                = "aks-test-01"
   location            = azurerm_resource_group.main.location
   resource_group_name = azurerm_resource_group.main.name
-  app_service_plan_id = azurerm_app_service_plan.main.id
-}
+  dns_prefix          = "akstest01"
 
-resource "azurerm_app_service_virtual_network_swift_connection" "main" {
-  app_service_id = azurerm_app_service.main.id
-  subnet_id      = azurerm_subnet.main.id
-}
 
-# # Create public IPs
-# resource "azurerm_public_ip" "main" {
-#   name                  = "pip-webapp"
-#   location              = azurerm_resource_group.rg.location
-#   resource_group_name   = azurerm_resource_group.rg.name
-#   allocation_method     = "Static"
-#   sku                   = "Standard"
-#   availability_zone     = "No-Zone"
-# }
+  
+  default_node_pool {
+    name           = "default"
+    node_count     = 1
+    vm_size        = "Standard_D2_v2"
+    vnet_subnet_id = azurerm_subnet.db.id
+  }
+
+  service_principal {
+    client_id     = "c67df633-3ec9-4d80-9fd5-32af9682aee0"
+    client_secret = "k8~WP6sgJEiHQ4v-TMJLbzjGnlG3vg-5T9"
+  }
+  
+  network_profile {
+    load_balancer_sku = "Standard"
+    network_plugin = "kubenet"
+  }
+
+}
+#   custom_data = "${base64encode(file("../script/script-mongodb.sh"))}"
