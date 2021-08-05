@@ -49,13 +49,6 @@ resource "azurerm_subnet" "db" {
   virtual_network_name = azurerm_virtual_network.main.name
   address_prefixes     = ["10.0.2.0/24"]
   
-  delegation {
-    name = "subnet-db"
-    service_delegation {
-      name    = "Microsoft.ContainerInstance/containerGroups"
-      actions = ["Microsoft.Network/virtualNetworks/subnets/action"]
-    }
-  }
 }
 
 
@@ -70,7 +63,7 @@ resource "azurerm_kubernetes_cluster" "main" {
     name           = "default"
     node_count     = 1
     vm_size        = "Standard_D2_v2"
-    node_subnet_id = azurerm_subnet.db.subnet_ids[0]
+    vnet_subnet_id = azurerm_subnet.db.id
   }
 
   service_principal {
@@ -82,6 +75,13 @@ resource "azurerm_kubernetes_cluster" "main" {
     load_balancer_sku = "Standard"
     network_plugin = "kubenet"
   }
-
+  
+  delegation {
+    name = "subnet-db"
+    service_delegation {
+      name    = "Microsoft.ContainerInstance/containerGroups"
+      actions = ["Microsoft.Network/virtualNetworks/subnets/action"]
+    }
+  }
 }
 #   custom_data = "${base64encode(file("../script/script-mongodb.sh"))}"
