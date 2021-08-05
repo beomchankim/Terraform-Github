@@ -66,7 +66,8 @@ resource "azurerm_kubernetes_cluster" "main" {
     name           = "default"
     node_count     = 1
     vm_size        = "Standard_D2_v2"
-    vnet_subnet_id = azurerm_subnet.main.id
+    network_vnet   = azurerm_virtual_network.main.name
+    network_subnet = azurerm_subnet.main.name
   }
 
   service_principal {
