@@ -57,8 +57,8 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Docker Build
         run: |
-          docker build . -t ${{ env.REGISTRY_NAME }}/node-web-app:1.0
-          docker push ${{ env.REGISTRY_NAME }}/node-web-app:1.0
+          docker build . -t ${{ env.REGISTRY_NAME }}/node-web-app:1.1
+          docker push ${{ env.REGISTRY_NAME }}/node-web-app:1.1
          
 #        docker run -p 49160:8080 -d ${{ env.REGISTRY_NAME }}/node-web-app:1.0    
       # Set the target Azure Kubernetes Service (AKS) cluster. 
@@ -74,5 +74,5 @@ jobs:
             AKS/deployment.yml
             AKS/service.yml
           images: |
-            ${{ env.REGISTRY_NAME }}/node-web-app:1.0
+            ${{ env.REGISTRY_NAME }}/node-web-app:1.1
           namespace: ${{ env.NAMESPACE }}
