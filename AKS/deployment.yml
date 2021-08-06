@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: node-web-app
-        image: acrrepo.azurecr.io/node-web-app:1.3
+        image: acrrepo.azurecr.io/node-web-app:0.1.${{ github.run_number }}
         ports:
         - containerPort: 80
