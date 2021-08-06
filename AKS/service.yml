@@ -8,5 +8,5 @@ spec:
     app: node-web-app
   ports:
     - protocol: TCP
-      port: 3000
+      port: 9001
       targetPort: 3000
