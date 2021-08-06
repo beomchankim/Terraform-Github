@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: node-web-app
-        image: acrrepo.azurecr.io/node-web-app:1.1
+        image: acrrepo.azurecr.io/node-web-app:1.2
         ports:
         - containerPort: 80
