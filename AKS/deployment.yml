@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: node-web-app
-        image: ${{ env.REGISTRY_NAME }}/node-web-app:0.1.${{ github.run_number }}
+        image: acrrepo2160.azurecr.io/node-web-app:0.1.${{ github.run_number }}
         ports:
         - containerPort: 80
