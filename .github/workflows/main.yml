@@ -10,7 +10,7 @@ on:
 #       - 'AKS/**'
 
 env:
-  REGISTRY_NAME: acrrepo.azurecr.io
+  REGISTRY_NAME: acrrepo2160.azurecr.io
   CLUSTER_NAME: aks-test-01
   CLUSTER_RESOURCE_GROUP: rg-terraform-test-3
   NAMESPACE: default
