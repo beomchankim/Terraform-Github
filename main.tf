@@ -3,7 +3,7 @@ terraform {
     resource_group_name  = "rg-storage"
     storage_account_name = "saterrafrom"
     container_name       = "con-terraform"
-    key                  = "lYx8w4v8GJXES0sTGXSjOcK3EEL7imcM8yvCqVgJfDfT6jy+rFjWquyqMCOTV7aj2NZTYIWB6UtSAOSctjdO/g=="
+    key                  = "qO6mzhWMNg2ap14BuOlrz6fiSRts12oHeflyT2eQjJ+RCcvONY3Ows84XZLh6nMw5trrwubXRUCqLn3BKR62dQ=="
   }
 }
 
